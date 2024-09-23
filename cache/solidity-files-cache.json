@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/Users/yinyang/Documents/blockchain/blockchain_exchange/contracts/Token.sol": {
-      "lastModificationDate": 1727004889672,
-      "contentHash": "5e652eeaf36d57343de7829579e5b76d",
+      "lastModificationDate": 1727101610153,
+      "contentHash": "661189bd4e46ca23ee4df90f6a152a4b",
       "sourceName": "contracts/Token.sol",
       "solcConfig": {
         "version": "0.8.9",
