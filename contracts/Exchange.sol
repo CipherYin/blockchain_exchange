@@ -24,6 +24,13 @@ contract Exchange {
         uint256 _value,
         uint256 balance
     );
+
+    event Withdraw(
+        address indexed token, 
+        address indexed user, 
+        uint256 _value,
+        uint256 balance
+    );
     constructor(address _feeAccount,uint256 _feePercent){
         feeAccount = _feeAccount;
         feePercent = _feePercent;
@@ -37,6 +44,17 @@ contract Exchange {
         tokens[_token][msg.sender] = tokens[_token][msg.sender]+ _amount;
         //emit an event
         emit Deposit(_token,msg.sender,_amount,tokens[_token][msg.sender]);
+    }
+
+    function withdrawToken(address _token,uint256 _amount) public{
+        require(tokens[_token][msg.sender]>=_amount);
+        //update user balance
+        Token(_token).transfer(msg.sender, _amount);
+        // Transfer tokens to user
+        tokens[_token][msg.sender] = tokens[_token][msg.sender]- _amount;
+
+        // emit event
+        emit Withdraw(_token,msg.sender,_amount,tokens[_token][msg.sender]);
     }
 
     //check balances
