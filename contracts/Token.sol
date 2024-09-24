@@ -77,8 +77,8 @@ contract Token {
         public 
         returns (bool success)
     {
-        require(_value<=allowance[_from][msg.sender]);
-        require(_value<=balanceOf[_from]);
+        require(_value<=allowance[_from][msg.sender],"insufficient all");
+        require(_value<=balanceOf[_from],"insufficient balance");
         allowance[_from][msg.sender] = allowance[_from][msg.sender] - _value;
         //spend tokens
         _transfer(_from, _to, _value);
