@@ -37,8 +37,8 @@
       ]
     },
     "/Users/yinyang/Documents/blockchain/blockchain_exchange/contracts/Exchange.sol": {
-      "lastModificationDate": 1727158389475,
-      "contentHash": "88c8c4c5648b376d38600c60d4b3cd4d",
+      "lastModificationDate": 1727178284131,
+      "contentHash": "354e35cb915db28fe626e2f5bbdba2d6",
       "sourceName": "contracts/Exchange.sol",
       "solcConfig": {
         "version": "0.8.9",

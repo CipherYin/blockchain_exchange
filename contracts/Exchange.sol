@@ -22,6 +22,7 @@ contract Exchange {
     //Order mapping
     mapping(uint256 => _Order) public orders;
     mapping(uint256 => bool) public orderCancelled;
+    mapping(uint256 => bool) public orderFilled;
 
     event Deposit(
         address indexed token, 
@@ -38,25 +39,34 @@ contract Exchange {
     );
 
     event Order(
-        uint256 id;
-        address user;
-        address tokenGet;
-        uint256 amountGet;
-        address tokenGive;
-        uint256 amountGive;
-        uint256 timestamp;
+        uint256 id,
+        address user,
+        address tokenGet,
+        uint256 amountGet,
+        address tokenGive,
+        uint256 amountGive,
+        uint256 timestamp
     );
 
     event Cancel(
-        uint256 id;
-        address user;
-        address tokenGet;
-        uint256 amountGet;
-        address tokenGive;
-        uint256 amountGive;
-        uint256 timestamp;
+        uint256 id,
+        address user,
+        address tokenGet,
+        uint256 amountGet,
+        address tokenGive,
+        uint256 amountGive,
+        uint256 timestamp
     );
-
+    event Trade(
+        uint256 id,
+        address user,
+        address tokenGet,
+        uint256 amountGet,
+        address tokenGive,
+        uint256 amountGive,
+        address creator,
+        uint256 timestamp
+    );
     struct _Order {
         // Attributes of an order
         uint256 id;
@@ -107,7 +117,7 @@ contract Exchange {
         address _tokenGet,
         uint256 _amountGet,
         address _tokenGive,
-        address _amountGive
+        uint256 _amountGive
     )public 
     {
         require(balanceOf(_tokenGive,msg.sender) >= _amountGive);
@@ -120,13 +130,14 @@ contract Exchange {
             _tokenGive,
             _amountGive,
             block.timestamp);
-        emit Order(ordersCount,
+        emit Order(
+            ordersCount,
             msg.sender,
             _tokenGet,
             _amountGet,
             _tokenGive,
             _amountGive,
-            block.timestamp)
+            block.timestamp);
     }
 
     function cancelOrder(uint256 _id) public {
@@ -140,10 +151,62 @@ contract Exchange {
         emit Cancel(
             _order.id,
             msg.sender,
-            _order._tokenGet,
-            _order._amountGet,
-            _order._tokenGive,
-            _order._amountGive,
-            block.timestamp)
+            _order.tokenGet,
+            _order.amountGet,
+            _order.tokenGive,
+            _order.amountGive,
+            block.timestamp);
+    }
+
+    function fillOrder(uint256 _id) public {
+
+        require(!orderCancelled[_id]);
+        require(!orderFilled[_id]);
+        require(_id>0 && _id<=ordersCount,"Order does not exist");
+
+        //fetch order
+        _Order storage _order = orders[_id];
+
+        // swapping Tokens(trading)
+        _trader(
+            _order.id,
+            _order.user,
+            _order.tokenGet,
+            _order.amountGet,
+            _order.tokenGive,
+            _order.amountGive);
+        orderFilled[_order.id] = true;
+    }
+
+    function _trader(
+        uint256 _orderId,
+        address _user,
+        address _tokenGet,
+        uint256 _amountGet,
+        address _tokenGive,
+        uint256 _amountGive
+    ) internal {
+
+        uint256 _feeAmount = (_amountGet * feePercent) / 100;
+        
+        tokens[_tokenGet][msg.sender] = tokens[_tokenGet][msg.sender] - (_amountGet + _feeAmount);
+        tokens[_tokenGet][_user] = tokens[_tokenGet][_user] + _amountGet;
+
+        //Charge fees
+        tokens[_tokenGet][feeAccount] = tokens[_tokenGet][feeAccount] + _feeAmount;
+
+        tokens[_tokenGive][msg.sender] = tokens[_tokenGive][msg.sender] + _amountGive;
+        tokens[_tokenGive][_user] = tokens[_tokenGive][_user] - _amountGive;
+
+        emit Trade(
+            _orderId,
+            msg.sender,
+            _tokenGet,
+            _amountGet,
+            _tokenGive,
+            _amountGive,
+            _user,
+            block.timestamp
+        );
     }
 }
