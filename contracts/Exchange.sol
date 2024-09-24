@@ -162,7 +162,7 @@ contract Exchange {
 
         require(!orderCancelled[_id]);
         require(!orderFilled[_id]);
-        require(_id>0 && _id<=ordersCount,"Order does not exist");
+        require(_id>0 && _id<=ordersCount,"Order does not");
 
         //fetch order
         _Order storage _order = orders[_id];
