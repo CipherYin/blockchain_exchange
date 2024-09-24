@@ -6,7 +6,7 @@ const tokens = (n) => {
 }
 
 describe("Exchange",()=>{
-    let deployer,feeAccount,exchange,token1,user1;
+    let deployer,feeAccount,exchange,token1,user1,user2;
     const feePercent = 10;
     let name = "Dapp University";
     let symbol = "DAPP";
@@ -20,6 +20,7 @@ describe("Exchange",()=>{
         deployer = accounts[0];
         feeAccount = accounts[1];
         user1 = accounts[2];
+        user2 = accounts[3];
         let transaction = await token1.connect(deployer).transfer(user1.address,tokens(100))
         exchange = await Exchange.deploy(feeAccount.address,feePercent);   
     })
