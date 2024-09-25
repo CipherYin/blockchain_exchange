@@ -3,16 +3,20 @@ import { useEffect } from 'react';
 import {ethers} from "ethers";
 import config from "./config.json"
 import { useDispatch } from 'react-redux';
-import { loadProvider,loadNetwork,loadAccount,loadToken } from './store/interactions';
+import { loadProvider,loadNetwork,loadAccount,loadTokens,loadExchange } from './store/interactions';
 function App() {
   const dispatch = useDispatch()
 
   const loadBlockchainData = async ()=>{
-    await loadAccount(dispatch)
     const provider = loadProvider(dispatch)
+    // current account && balance from Metamask
+    await loadAccount(dispatch,provider)
+    //hardhat: 31337 kovan:42
     const chainId = await loadNetwork(provider,dispatch)
-    await loadToken(provider,config[chainId].DApp.address,dispatch)
-  
+    await loadTokens(provider,[config[chainId].DApp.address,config[chainId].mETH.address,config[chainId].mDAI.address],dispatch)
+    
+    //Load exchange contract
+    await loadExchange(provider,config[chainId].exchange.address,dispatch)
   }
   useEffect(()=>{
     loadBlockchainData()
