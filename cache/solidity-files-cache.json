@@ -108,6 +108,114 @@
       "artifacts": [
         "console"
       ]
+    },
+    "/Users/yinyang/Documents/blockchain/blockchain_exchange2/blockchain_exchange/contracts/Exchange.sol": {
+      "lastModificationDate": 1727250250610,
+      "contentHash": "3758cc847e6cc5e89d74fd82993f6260",
+      "sourceName": "contracts/Exchange.sol",
+      "solcConfig": {
+        "version": "0.8.9",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "hardhat/console.sol",
+        "./Token.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "Exchange"
+      ]
+    },
+    "/Users/yinyang/Documents/blockchain/blockchain_exchange2/blockchain_exchange/contracts/Token.sol": {
+      "lastModificationDate": 1727250250610,
+      "contentHash": "5da0916a7e5bca863bd3d94cc2301836",
+      "sourceName": "contracts/Token.sol",
+      "solcConfig": {
+        "version": "0.8.9",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "Token"
+      ]
+    },
+    "/Users/yinyang/Documents/blockchain/blockchain_exchange2/blockchain_exchange/node_modules/hardhat/console.sol": {
+      "lastModificationDate": 1727250281319,
+      "contentHash": "681c532e816169606d13a5fe8b475074",
+      "sourceName": "hardhat/console.sol",
+      "solcConfig": {
+        "version": "0.8.9",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.4.22 <0.9.0"
+      ],
+      "artifacts": [
+        "console"
+      ]
     }
   }
 }
