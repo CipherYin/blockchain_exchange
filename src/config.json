@@ -12,5 +12,19 @@
         "mDAI": {
             "address":"0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0"
         }
+    },
+    "11155111": {
+        "exchange": {
+            "address": "0xYOUR_SEPOLIA_EXCHANGE_ADDRESS"
+        },
+        "DApp": {
+            "address": "0xYOUR_SEPOLIA_DAPP_ADDRESS"
+        },
+        "mETH": {
+            "address": "0xYOUR_SEPOLIA_METH_ADDRESS"
+        },
+        "mDAI": {
+            "address": "0xYOUR_SEPOLIA_MDAI_ADDRESS"
+        }
     }
 }

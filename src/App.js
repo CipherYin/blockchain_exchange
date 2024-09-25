@@ -4,16 +4,27 @@ import {ethers} from "ethers";
 import config from "./config.json"
 import { useDispatch } from 'react-redux';
 import { loadProvider,loadNetwork,loadAccount,loadTokens,loadExchange } from './store/interactions';
+import Navbar from './components/Navbar';
+import Markets from './components/Markets';
 function App() {
   const dispatch = useDispatch()
 
   const loadBlockchainData = async ()=>{
     const provider = loadProvider(dispatch)
     // current account && balance from Metamask
-    await loadAccount(dispatch,provider)
+
+    window.ethereum.on('accountsChanged',async () => {
+      await loadAccount(dispatch,provider)
+    })
+    // await loadAccount(dispatch,provider)
     //hardhat: 31337 kovan:42
     const chainId = await loadNetwork(provider,dispatch)
-    await loadTokens(provider,[config[chainId].DApp.address,config[chainId].mETH.address,config[chainId].mDAI.address],dispatch)
+
+    //Reload page when network changes
+    window.ethereum.on('chainChanged',()=>{
+      window.location.reload()
+    })
+    await loadTokens(provider,[config[chainId].DApp.address,config[chainId].mETH.address],dispatch)
     
     //Load exchange contract
     await loadExchange(provider,config[chainId].exchange.address,dispatch)
@@ -25,12 +36,12 @@ function App() {
   return (
     <div>
 
-      {/* Navbar */}
+      <Navbar/>
 
       <main className='exchange grid'>
         <section className='exchange__section--left grid'>
 
-          {/* Markets */}
+          <Markets/>
 
           {/* Balance */}
 

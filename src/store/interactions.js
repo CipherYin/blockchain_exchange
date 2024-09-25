@@ -15,14 +15,15 @@ export const loadNetwork = async (provider,dispatch) => {
 }
 
 export const loadAccount = async (dispatch,provider) => {
-    const accounts = await window.ethereum.request({method:'eth_requestAccounts'})
-    const account = ethers.utils.getAddress(accounts[0])
-    dispatch({type: 'ACCOUNT_LOADED',account})
+    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+    console.log(accounts)
+    const account = ethers.utils.getAddress(accounts[0]);
+    dispatch({ type: 'ACCOUNT_LOADED', account });
 
-    let balance = await provider.getBalance(account)
-    balance = ethers.utils.formatEther(balance)
+    let balance = await provider.getBalance(account);
+    balance = ethers.utils.formatEther(balance);
+    dispatch({ type: 'ETHER_BALANCE_LOADED', balance });
 
-    dispatch({type:'ETHER_BALANCE_LOADED',balance})
     return account;
 }
 
@@ -37,9 +38,7 @@ export const loadTokens = async (provider,addresses,dispatch) => {
     symbol = await token.symbol()
     dispatch({type: 'TOKEN_2_LOADED',token,symbol})
 
-    token = new ethers.Contract(addresses[2],TOKEN_ABI,provider)
-    symbol = await token.symbol()
-    dispatch({type: 'TOKEN_3_LOADED',token,symbol})
+   
     return token
 }
 
