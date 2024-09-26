@@ -3,9 +3,10 @@ import { useEffect } from 'react';
 import {ethers} from "ethers";
 import config from "./config.json"
 import { useDispatch } from 'react-redux';
-import { loadProvider,loadNetwork,loadAccount,loadTokens,loadExchange } from './store/interactions';
+import { loadProvider,loadNetwork,loadAccount,loadTokens,loadExchange,subscribeToEvent } from './store/interactions';
 import Navbar from './components/Navbar';
 import Markets from './components/Markets';
+import Balance from './components/Balance';
 function App() {
   const dispatch = useDispatch()
 
@@ -27,10 +28,13 @@ function App() {
     await loadTokens(provider,[config[chainId].DApp.address,config[chainId].mETH.address],dispatch)
     
     //Load exchange contract
-    await loadExchange(provider,config[chainId].exchange.address,dispatch)
+    let exchange = await loadExchange(provider,config[chainId].exchange.address,dispatch)
+    console.log(exchange)
+    subscribeToEvent(exchange,dispatch)
   }
   useEffect(()=>{
     loadBlockchainData()
+    
   })
 
   return (
@@ -43,7 +47,7 @@ function App() {
 
           <Markets/>
 
-          {/* Balance */}
+          <Balance/>
 
           {/* Order */}
 

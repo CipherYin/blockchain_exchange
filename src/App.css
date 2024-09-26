@@ -236,6 +236,9 @@ small {
 	margin: 0 0 0.75em 0;
 }
 
+.exchange__transfers{
+	margin-top: -280px;
+}
 /* ------------------------------------------------------ */
 /* MARKET COMPONENT */
 
